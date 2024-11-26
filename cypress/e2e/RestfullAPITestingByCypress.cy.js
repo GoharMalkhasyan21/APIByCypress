@@ -1,9 +1,7 @@
-// import {faker} from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 describe('Restfull API ', () => {
     it("Create Token Request", () => {
         let token;
-        let firstname;
-        let lastname;
         cy.request({
             method: "POST",
             url:  "https://restful-booker.herokuapp.com/auth",
@@ -19,14 +17,16 @@ describe('Restfull API ', () => {
     });
 
     it("Create Booking Request", () => {
-        // firstname = faker.person.firstName();
-        // lastname = faker.person.lastName();
+        let firstname;
+        let lastname;
+        firstname = faker.person.firstName();
+        lastname = faker.person.lastName();
         cy.request({
             method: "POST",
             url:  "https://restful-booker.herokuapp.com/booking",
             body: {
-                "firstname" : "Jim",
-                "lastname" : "Brown",
+                "firstname" : firstname,
+                "lastname" : lastname,
                 "totalprice" : 111,
                 "depositpaid" : true,
                 "bookingdates" : {
@@ -39,8 +39,8 @@ describe('Restfull API ', () => {
                 expect(response.status).to.eq(200);
                 expect(response.body.booking).to.have.property("firstname");
                 expect(response.body.booking).to.have.property("lastname");
-                expect(response.body.booking).property('firstname').to.equal("Jim");
-                expect(response.body.booking).property('lastname').to.equal("Brown");
+                expect(response.body.booking).property('firstname').to.equal(firstname);
+                expect(response.body.booking).property('lastname').to.equal(lastname);
 
         });
     });
